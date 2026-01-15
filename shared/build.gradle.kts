@@ -75,6 +75,7 @@ kotlin {
 
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.screenmodel)
+                implementation(libs.voyager.koin)
 
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)
