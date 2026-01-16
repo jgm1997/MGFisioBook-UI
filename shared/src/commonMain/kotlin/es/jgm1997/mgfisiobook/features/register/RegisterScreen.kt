@@ -1,4 +1,4 @@
-package es.jgm1997.mgfisiobook.features.login
+package es.jgm1997.mgfisiobook.features.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,18 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.features.home.HomeScreen
-import es.jgm1997.mgfisiobook.features.register.RegisterScreen
 
-class LoginScreen : Screen {
+class RegisterScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val viewModel = getScreenModel<LoginViewModel>()
+        val viewModel = getScreenModel<RegisterViewModel>()
         val state by viewModel.state.collectAsState()
 
+        var name by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
@@ -42,40 +42,51 @@ class LoginScreen : Screen {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Nombre completo") }
+            )
+            Spacer(Modifier.height(12.dp))
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") }
+            )
             Spacer(Modifier.height(12.dp))
             TextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") })
+                label = { Text("Contraseña") }
+            )
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.login(email, password) },
-                enabled = state !is LoginState.Loading
+                onClick = { viewModel.register(name, email, password) },
+                enabled = state !is RegisterState.Loading
             ) {
-                Text("Login")
+                Text("Crear cuenta")
             }
             Spacer(Modifier.height(16.dp))
-            TextButton(onClick = { navigator?.push(RegisterScreen()) }) {
-                Text("¿No tienes cuenta? Regístrate")
+            // El flow es Login -> Register. Por tanto, para ir al login, solo hay que volver atrás
+            TextButton(onClick = { navigator?.pop() }) {
+                Text("¿Ya tienes una cuenta? Inicia sesión")
             }
 
             when (state) {
-                is LoginState.Loading -> {
+                is RegisterState.Loading -> {
                     Spacer(Modifier.height(16.dp))
                     CircularProgressIndicator()
                 }
 
-                is LoginState.Error -> {
+                is RegisterState.Error -> {
                     Spacer(Modifier.height(16.dp))
                     Text(
-                        text = (state as LoginState.Error).message,
+                        text = (state as RegisterState.Error).message,
                         color = MaterialTheme.colors.error
                     )
                 }
 
-                is LoginState.Success -> navigator?.push(HomeScreen())
-
+                is RegisterState.Success -> navigator?.push(HomeScreen())
                 else -> Unit
             }
         }
