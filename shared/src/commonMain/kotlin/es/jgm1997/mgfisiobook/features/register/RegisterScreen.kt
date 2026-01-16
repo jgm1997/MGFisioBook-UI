@@ -33,7 +33,8 @@ class RegisterScreen : Screen {
         val viewModel = getScreenModel<RegisterViewModel>()
         val state by viewModel.state.collectAsState()
 
-        var name by remember { mutableStateOf("") }
+        var firstName by remember { mutableStateOf("") }
+        var lastName by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
@@ -42,10 +43,18 @@ class RegisterScreen : Screen {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Text("Registro", style = MaterialTheme.typography.h5)
+            Spacer(Modifier.height(16.dp))
             TextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Nombre completo") }
+                value = firstName,
+                onValueChange = { firstName = it },
+                label = { Text("Nombre") }
+            )
+            Spacer(Modifier.height(12.dp))
+            TextField(
+                value = lastName,
+                onValueChange = { lastName = it },
+                label = { Text("Apellidos") }
             )
             Spacer(Modifier.height(12.dp))
             TextField(
@@ -61,7 +70,7 @@ class RegisterScreen : Screen {
             )
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.register(name, email, password) },
+                onClick = { viewModel.register(firstName, lastName, email, password) },
                 enabled = state !is RegisterState.Loading
             ) {
                 Text("Crear cuenta")

@@ -3,7 +3,7 @@ package es.jgm1997.mgfisiobook.features.login
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import es.jgm1997.mgfisiobook.core.auth.AuthRepository
-import es.jgm1997.mgfisiobook.core.models.User
+import es.jgm1997.mgfisiobook.core.models.TokenResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,6 +29,6 @@ class LoginViewModel(private val authRepository: AuthRepository) : ScreenModel {
 sealed class LoginState {
     object Idle : LoginState()
     object Loading : LoginState()
-    data class Success(val user: User) : LoginState()
+    data class Success(val user: TokenResponse) : LoginState()
     data class Error(val message: String) : LoginState()
 }

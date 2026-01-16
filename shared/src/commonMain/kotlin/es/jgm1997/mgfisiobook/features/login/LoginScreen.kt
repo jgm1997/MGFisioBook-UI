@@ -42,6 +42,8 @@ class LoginScreen : Screen {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Text("Iniciar sesión", style = MaterialTheme.typography.h5)
+            Spacer(Modifier.height(16.dp))
             TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
             Spacer(Modifier.height(12.dp))
             TextField(
