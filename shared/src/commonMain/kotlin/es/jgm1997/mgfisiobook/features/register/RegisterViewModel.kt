@@ -3,7 +3,7 @@ package es.jgm1997.mgfisiobook.features.register
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import es.jgm1997.mgfisiobook.core.auth.AuthRepository
-import es.jgm1997.mgfisiobook.core.models.TokenResponse
+import es.jgm1997.mgfisiobook.core.models.AuthToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,6 +29,6 @@ class RegisterViewModel(private val authRepository: AuthRepository) : ScreenMode
 sealed class RegisterState {
     object Idle : RegisterState()
     object Loading : RegisterState()
-    data class Success(val user: TokenResponse) : RegisterState()
+    data class Success(val user: AuthToken) : RegisterState()
     data class Error(val message: String) : RegisterState()
 }

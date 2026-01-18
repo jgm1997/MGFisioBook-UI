@@ -1,6 +1,6 @@
 package es.jgm1997.mgfisiobook.core.auth
 
-import es.jgm1997.mgfisiobook.core.models.TokenResponse
+import es.jgm1997.mgfisiobook.core.models.AuthToken
 import es.jgm1997.mgfisiobook.core.network.ApiConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -27,12 +27,13 @@ class AuthRepository(private val client: HttpClient) {
         @SerialName("last_name") val lastName: String
     )
 
-    suspend fun login(email: String, password: String): TokenResponse {
+    suspend fun login(email: String, password: String): AuthToken {
         try {
-            return client.post("${ApiConfig.baseUrl}/auth/login") {
+            val response = client.post("${ApiConfig.baseUrl}/auth/login") {
                 contentType(ContentType.Application.Json)
                 setBody(LoginRequest(email, password))
-            }.body<TokenResponse>()
+            }.body<AuthToken>()
+            return response
         } catch (e: ClientRequestException) {
             println("Credenciales incorrectas: ${e.response.status.description}")
             throw Exception("Credenciales incorrectas: ${e.response.status.description}")
@@ -50,7 +51,7 @@ class AuthRepository(private val client: HttpClient) {
         password: String,
         firstName: String,
         lastName: String
-    ): TokenResponse {
+    ): AuthToken {
         try {
             return client.post("${ApiConfig.baseUrl}.auth/signup") {
                 contentType(ContentType.Application.Json)

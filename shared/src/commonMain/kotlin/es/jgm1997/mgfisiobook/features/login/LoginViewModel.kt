@@ -3,7 +3,8 @@ package es.jgm1997.mgfisiobook.features.login
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import es.jgm1997.mgfisiobook.core.auth.AuthRepository
-import es.jgm1997.mgfisiobook.core.models.TokenResponse
+import es.jgm1997.mgfisiobook.core.auth.AuthState
+import es.jgm1997.mgfisiobook.core.models.AuthToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ScreenModel {
         screenModelScope.launch {
             try {
                 val user = authRepository.login(email, password)
+                AuthState.setToken(user)
                 _state.value = LoginState.Success(user)
             } catch (e: Exception) {
                 _state.value = LoginState.Error(e.message ?: "Error desconocido")
@@ -29,6 +31,6 @@ class LoginViewModel(private val authRepository: AuthRepository) : ScreenModel {
 sealed class LoginState {
     object Idle : LoginState()
     object Loading : LoginState()
-    data class Success(val user: TokenResponse) : LoginState()
+    data class Success(val user: AuthToken) : LoginState()
     data class Error(val message: String) : LoginState()
 }
