@@ -8,12 +8,13 @@ plugins {
 }
 
 kotlin {
+    @Suppress("DEPRECATION")
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -23,7 +24,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.ui.tooling.preview)
@@ -46,6 +47,7 @@ kotlin {
     }
 }
 
+@Suppress("DEPRECATION")
 android {
     namespace = "es.jgm1997.mgfisiobook"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -64,7 +66,12 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -76,4 +83,3 @@ android {
 dependencies {
     debugImplementation(libs.ui.tooling)
 }
-
