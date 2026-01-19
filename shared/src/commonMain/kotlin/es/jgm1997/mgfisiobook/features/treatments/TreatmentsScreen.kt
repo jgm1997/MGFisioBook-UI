@@ -20,12 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
+import es.jgm1997.mgfisiobook.features.login.LoginScreen
 
 class TreatmentsScreen : Screen {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         val viewModel = getScreenModel<TreatmentsViewModel>()
         val state by viewModel.state.collectAsState()
+
+        if (!isAuthenticated()) {
+            navigator?.replace(LoginScreen())
+            return
+        }
 
         when (state) {
             is TreatmentsState.Loading -> {

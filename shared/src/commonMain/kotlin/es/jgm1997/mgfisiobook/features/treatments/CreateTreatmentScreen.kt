@@ -22,6 +22,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.core.auth.hasRole
+import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
+import es.jgm1997.mgfisiobook.features.home.HomeScreen
+import es.jgm1997.mgfisiobook.features.login.LoginScreen
 
 class CreateTreatmentScreen : Screen {
     @Composable
@@ -34,6 +38,16 @@ class CreateTreatmentScreen : Screen {
         var description by remember { mutableStateOf("") }
         var durationMinutes by remember { mutableStateOf("") }
         var price by remember { mutableStateOf("") }
+
+        if (!isAuthenticated()) {
+            navigator?.replace(LoginScreen())
+            return
+        }
+
+        if (!hasRole("admin", "therapist")) {
+            navigator?.replace(HomeScreen())
+            return
+        }
 
         Column(
             modifier = Modifier.padding(16.dp),
