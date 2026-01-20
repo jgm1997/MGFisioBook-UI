@@ -6,7 +6,8 @@ import org.koin.core.context.stopKoin
 fun initKoin() {
     try {
         stopKoin()
-    } catch (_: Exception) {
+    } catch (e: Exception) {
+        println(e.message)
     }
 
     startKoin { modules(appModule) }
