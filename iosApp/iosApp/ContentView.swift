@@ -3,7 +3,8 @@ import shared
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController() as! UIViewController
+        InitKoinKt.doInitKoin()
+        return MainViewControllerKt.MainViewController() as! UIViewController
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

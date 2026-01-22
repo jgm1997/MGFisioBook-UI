@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565295317946",
+    "project_id": "mgfisiobook",
+    "storage_bucket": "mgfisiobook.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565295317946:android:f5426f9536490fd2081383",
+        "android_client_info": {
+          "package_name": "es.jgm1997.mgfisiobook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtWt7-mfS0lLvlqWHwwI88rboFvjenYTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
