@@ -5,8 +5,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.navigator.Navigator
 import es.jgm1997.mgfisiobook.core.auth.AuthState
-import es.jgm1997.mgfisiobook.features.home.HomeScreen
-import es.jgm1997.mgfisiobook.features.login.LoginScreen
+import es.jgm1997.mgfisiobook.ui.screens.HomeScreen
+import es.jgm1997.mgfisiobook.ui.screens.LoginScreen
 
 @Composable
 fun AppNavigator() {

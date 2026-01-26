@@ -1,10 +1,10 @@
 package es.jgm1997.shared
 
-import es.jgm1997.mgfisiobook.core.auth.AuthRepository
+import es.jgm1997.mgfisiobook.core.repositories.AuthRepository
 import es.jgm1997.mgfisiobook.core.auth.AuthStorage
 import es.jgm1997.shared.auth.AuthResult
 import es.jgm1997.shared.auth.JwtParser
-import es.jgm1997.shared.push.RegisterDeviceUseCase
+import es.jgm1997.shared.usecase.RegisterDeviceUseCase
 import es.jgm1997.shared.push.PushTokenProvider
 
 
