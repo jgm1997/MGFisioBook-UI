@@ -18,8 +18,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.core.auth.AuthViewModel
 import es.jgm1997.mgfisiobook.core.auth.hasRole
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
+import kotlin.uuid.ExperimentalUuidApi
 
 class HomeScreen : Screen {
+    @OptIn(ExperimentalUuidApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -39,8 +41,14 @@ class HomeScreen : Screen {
 
             Spacer(Modifier.height(16.dp))
 
-            Button(onClick = { navigator?.push(AppointmentsListScreen()) }) {
-                Text("Mis citas")
+            if (hasRole("patient")) {
+                Button(onClick = { navigator?.push(AppointmentsListScreen()) }) {
+                    Text("Mis citas")
+                }
+            } else {
+                Button(onClick = { navigator?.push(MyAvailabilityScreen()) }) {
+                    Text("Mi disponibilidad")
+                }
             }
 
             Spacer(Modifier.height(16.dp))

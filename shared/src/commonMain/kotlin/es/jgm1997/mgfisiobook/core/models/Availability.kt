@@ -6,12 +6,6 @@ import kotlinx.serialization.Serializable
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-data class AvailabilitySlot(
-    val start: LocalDateTime,
-    val end: LocalDateTime,
-    val available: Boolean
-)
-
 @OptIn(ExperimentalUuidApi::class)
 @Serializable
 data class AvailabilityPublic(

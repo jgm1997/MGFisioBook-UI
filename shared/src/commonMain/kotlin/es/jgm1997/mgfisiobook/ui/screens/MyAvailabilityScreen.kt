@@ -20,11 +20,14 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.ui.components.availability.AvailabilityList
 import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityState
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityViewModel
+import kotlin.uuid.ExperimentalUuidApi
 
 class MyAvailabilityScreen() : Screen {
+    @OptIn(ExperimentalUuidApi::class)
     @Composable
     override fun Content() {
         val viewModel = getScreenModel<MyAvailabilityViewModel>()
@@ -50,12 +53,7 @@ class MyAvailabilityScreen() : Screen {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column {
-                        items.forEach { item ->
-                            Text("Día: ${item.weekday} -> ${item.startTime} - ${item.endTime}")
-                            Spacer(Modifier.height(8.dp))
-                        }
-                    }
+                    AvailabilityList(items, onDelete = { item -> viewModel.delete(item.id) })
                     Spacer(Modifier.height(16.dp))
                     Button(onClick = { navigator?.push(AvailabilityEditorScreen()) }) {
                         Text("Añadir disponibilidad")

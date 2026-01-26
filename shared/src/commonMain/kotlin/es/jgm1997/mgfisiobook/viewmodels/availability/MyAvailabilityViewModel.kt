@@ -7,8 +7,11 @@ import es.jgm1997.mgfisiobook.core.repositories.AvailabilityRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
-class MyAvailabilityViewModel(private val repository: AvailabilityRepository): ScreenModel {
+@OptIn(ExperimentalUuidApi::class)
+class MyAvailabilityViewModel(private val repository: AvailabilityRepository) : ScreenModel {
     private val _state = MutableStateFlow<MyAvailabilityState>(MyAvailabilityState.Idle)
     val state: StateFlow<MyAvailabilityState> = _state
 
@@ -17,6 +20,20 @@ class MyAvailabilityViewModel(private val repository: AvailabilityRepository): S
             _state.value = MyAvailabilityState.Loading
 
             try {
+                val items = repository.getMyAvailability()
+                _state.value = MyAvailabilityState.Success(items)
+            } catch (e: Exception) {
+                _state.value = MyAvailabilityState.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
+
+    fun delete(id: Uuid) {
+        screenModelScope.launch {
+            _state.value = MyAvailabilityState.Loading
+
+            try {
+                repository.deleteAvailabilitySlot(id)
                 val items = repository.getMyAvailability()
                 _state.value = MyAvailabilityState.Success(items)
             } catch (e: Exception) {
