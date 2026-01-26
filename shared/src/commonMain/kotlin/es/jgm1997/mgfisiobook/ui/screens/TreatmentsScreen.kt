@@ -1,4 +1,4 @@
-package es.jgm1997.mgfisiobook.features.treatments
+package es.jgm1997.mgfisiobook.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
-import es.jgm1997.mgfisiobook.features.login.LoginScreen
+import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsState
+import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
 
 class TreatmentsScreen : Screen {
     @Composable

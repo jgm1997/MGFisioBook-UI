@@ -1,8 +1,8 @@
-package es.jgm1997.mgfisiobook.features.login
+package es.jgm1997.mgfisiobook.viewmodels.auth
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import es.jgm1997.mgfisiobook.core.auth.AuthRepository
+import es.jgm1997.mgfisiobook.core.repositories.AuthRepository
 import es.jgm1997.mgfisiobook.core.auth.AuthState
 import es.jgm1997.mgfisiobook.core.models.AuthToken
 import kotlinx.coroutines.flow.MutableStateFlow

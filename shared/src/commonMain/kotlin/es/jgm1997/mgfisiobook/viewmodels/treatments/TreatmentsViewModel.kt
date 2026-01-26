@@ -1,9 +1,9 @@
-package es.jgm1997.mgfisiobook.features.treatments
+package es.jgm1997.mgfisiobook.viewmodels.treatments
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import es.jgm1997.mgfisiobook.core.models.Treatment
-import es.jgm1997.mgfisiobook.core.treatments.TreatmentRepository
+import es.jgm1997.mgfisiobook.core.repositories.TreatmentRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

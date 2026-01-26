@@ -1,4 +1,4 @@
-package es.jgm1997.mgfisiobook.core.device
+package es.jgm1997.mgfisiobook.core.repositories
 
 import es.jgm1997.mgfisiobook.core.auth.AuthStorage
 import es.jgm1997.mgfisiobook.core.network.ApiConfig

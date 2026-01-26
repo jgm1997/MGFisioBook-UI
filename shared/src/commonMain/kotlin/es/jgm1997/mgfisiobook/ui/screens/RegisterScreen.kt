@@ -1,4 +1,4 @@
-package es.jgm1997.mgfisiobook.features.login
+package es.jgm1997.mgfisiobook.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,38 +18,49 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import es.jgm1997.mgfisiobook.features.home.HomeScreen
-import es.jgm1997.mgfisiobook.features.register.RegisterScreen
+import es.jgm1997.mgfisiobook.viewmodels.auth.RegisterState
+import es.jgm1997.mgfisiobook.viewmodels.auth.RegisterViewModel
 
-class LoginScreen : Screen {
+class RegisterScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val viewModel = getScreenModel<LoginViewModel>()
+        val viewModel = getScreenModel<RegisterViewModel>()
         val state by viewModel.state.collectAsState()
 
+        var firstName by remember { mutableStateOf("") }
+        var lastName by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
-        var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Iniciar sesión", style = MaterialTheme.typography.h5)
+            Text("Registro", style = MaterialTheme.typography.h5)
             Spacer(Modifier.height(16.dp))
+            TextField(
+                value = firstName,
+                onValueChange = { firstName = it },
+                label = { Text("Nombre") }
+            )
+            Spacer(Modifier.height(12.dp))
+            TextField(
+                value = lastName,
+                onValueChange = { lastName = it },
+                label = { Text("Apellidos") }
+            )
+            Spacer(Modifier.height(12.dp))
             TextField(
                 value = email,
                 onValueChange = { email = it },
@@ -60,38 +71,38 @@ class LoginScreen : Screen {
             TextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                label = { Text("Contraseña") },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.login(email, password) },
-                enabled = state !is LoginState.Loading
+                onClick = { viewModel.register(firstName, lastName, email, password) },
+                enabled = state !is RegisterState.Loading
             ) {
-                Text("Login")
+                Text("Crear cuenta")
             }
             Spacer(Modifier.height(16.dp))
-            TextButton(onClick = { navigator?.push(RegisterScreen()) }) {
-                Text("¿No tienes cuenta? Regístrate")
+            // El flow es Login -> Register. Por tanto, para ir al login, solo hay que volver atrás
+            TextButton(onClick = { navigator?.pop() }) {
+                Text("¿Ya tienes una cuenta? Inicia sesión")
             }
 
             when (state) {
-                is LoginState.Loading -> {
+                is RegisterState.Loading -> {
                     Spacer(Modifier.height(16.dp))
                     CircularProgressIndicator()
                 }
 
-                is LoginState.Error -> {
+                is RegisterState.Error -> {
                     Spacer(Modifier.height(16.dp))
                     Text(
-                        text = (state as LoginState.Error).message,
+                        text = (state as RegisterState.Error).message,
                         color = MaterialTheme.colors.error
                     )
                 }
 
-                is LoginState.Success -> navigator?.push(HomeScreen())
-
+                is RegisterState.Success -> navigator?.push(HomeScreen())
                 else -> Unit
             }
         }
