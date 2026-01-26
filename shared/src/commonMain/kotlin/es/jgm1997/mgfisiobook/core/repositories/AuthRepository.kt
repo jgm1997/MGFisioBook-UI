@@ -1,4 +1,4 @@
-package es.jgm1997.mgfisiobook.core.auth
+package es.jgm1997.mgfisiobook.core.repositories
 
 import es.jgm1997.mgfisiobook.core.models.AuthToken
 import es.jgm1997.mgfisiobook.core.network.ApiConfig
@@ -12,8 +12,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-// private const val BASE_URL = "https://mgfisiobook.onrender.com/"
 
 class AuthRepository(private val client: HttpClient) {
     @Serializable
