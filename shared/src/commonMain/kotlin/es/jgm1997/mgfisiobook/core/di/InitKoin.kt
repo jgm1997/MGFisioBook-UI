@@ -12,5 +12,6 @@ fun initKoin(specModule: Module) {
     }
 
     startKoin {
-        modules(appModule, specModule) }
+        modules(appModule, specModule)
+    }
 }

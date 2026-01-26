@@ -1,5 +1,6 @@
 package es.jgm1997.mgfisiobook.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -48,7 +50,11 @@ class TreatmentsScreen : Screen {
             is TreatmentsState.Success -> {
                 val treatments = (state as TreatmentsState.Success).treatments
 
-                LazyColumn(modifier = Modifier.padding(16.dp)) {
+                LazyColumn(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     items(treatments) { treatment ->
                         Card(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),

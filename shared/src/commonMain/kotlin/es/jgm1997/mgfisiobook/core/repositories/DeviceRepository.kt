@@ -3,6 +3,8 @@ package es.jgm1997.mgfisiobook.core.repositories
 import es.jgm1997.mgfisiobook.core.auth.AuthStorage
 import es.jgm1997.mgfisiobook.core.network.ApiConfig
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -14,16 +16,27 @@ class DeviceRepository(private val client: HttpClient) {
         appVersion: String?,
         userId: String
     ) {
-        client.post("${ApiConfig.baseUrl}/devices") {
-            header("Authorization", "Bearer ${AuthStorage.loadToken()}")
-            setBody(
-                mapOf(
-                    "token" to token,
-                    "platform" to platform,
-                    "app_version" to appVersion,
-                    "user_id" to userId
+        try {
+            client.post("${ApiConfig.baseUrl}/devices") {
+                header("Authorization", "Bearer ${AuthStorage.loadToken()}")
+                setBody(
+                    mapOf(
+                        "token" to token,
+                        "platform" to platform,
+                        "app_version" to appVersion,
+                        "user_id" to userId
+                    )
                 )
-            )
+            }
+        } catch (e: ClientRequestException) {
+            println("Credenciales incorrectas: ${e.response.status.description}")
+            throw Exception("Credenciales incorrectas: ${e.response.status.description}")
+        } catch (e: ServerResponseException) {
+            println("Error del servidor: ${e.response.status.description}")
+            throw Exception("Error del servidor: ${e.response.status.description}")
+        } catch (e: Exception) {
+            println("Error de conexión: ${e.message}")
+            throw Exception("Error de conexión: ${e.message}")
         }
     }
 }

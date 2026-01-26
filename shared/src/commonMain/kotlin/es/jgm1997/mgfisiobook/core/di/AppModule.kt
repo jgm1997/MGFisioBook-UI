@@ -11,6 +11,7 @@ import es.jgm1997.mgfisiobook.viewmodels.appointments.AppointmentDetailViewModel
 import es.jgm1997.mgfisiobook.viewmodels.appointments.AppointmentsListViewModel
 import es.jgm1997.mgfisiobook.viewmodels.auth.LoginViewModel
 import es.jgm1997.mgfisiobook.viewmodels.auth.RegisterViewModel
+import es.jgm1997.mgfisiobook.viewmodels.availability.AvailabilityEditorViewModel
 import es.jgm1997.mgfisiobook.viewmodels.treatments.CreateTreatmentViewModel
 import es.jgm1997.mgfisiobook.viewmodels.availability.DailyAvailabilityViewModel
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityViewModel
@@ -40,4 +41,5 @@ val appModule = module {
     factory { AppointmentsListViewModel(get()) }
     factory { DailyAvailabilityViewModel(get()) }
     factory { MyAvailabilityViewModel(get()) }
+    factory { AvailabilityEditorViewModel(get()) }
 }
