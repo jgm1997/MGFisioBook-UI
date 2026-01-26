@@ -39,6 +39,12 @@ class HomeScreen : Screen {
 
             Spacer(Modifier.height(16.dp))
 
+            Button(onClick = { navigator?.push(AppointmentsListScreen()) }) {
+                Text("Mis citas")
+            }
+
+            Spacer(Modifier.height(16.dp))
+
             Button(onClick = { navigator?.push(TreatmentsScreen()) }) {
                 Text("Ver tratamientos")
             }

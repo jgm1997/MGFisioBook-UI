@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.ui.components.common.LoadingComponent
 import es.jgm1997.mgfisiobook.viewmodels.auth.RegisterState
 import es.jgm1997.mgfisiobook.viewmodels.auth.RegisterViewModel
 
@@ -89,10 +89,7 @@ class RegisterScreen : Screen {
             }
 
             when (state) {
-                is RegisterState.Loading -> {
-                    Spacer(Modifier.height(16.dp))
-                    CircularProgressIndicator()
-                }
+                is RegisterState.Loading -> LoadingComponent()
 
                 is RegisterState.Error -> {
                     Spacer(Modifier.height(16.dp))

@@ -22,6 +22,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
+import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsState
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
 
@@ -66,12 +67,8 @@ class TreatmentsScreen : Screen {
                 }
             }
 
-            is TreatmentsState.Error -> {
-                Text(
-                    text = (state as TreatmentsState.Error).message,
-                    color = MaterialTheme.colors.error
-                )
-            }
+            is TreatmentsState.Error -> ErrorComponent((state as TreatmentsState.Error).message)
+
         }
     }
 }

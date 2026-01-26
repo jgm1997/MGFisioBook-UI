@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -24,6 +23,8 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.core.auth.hasRole
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
+import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
+import es.jgm1997.mgfisiobook.ui.components.common.LoadingComponent
 import es.jgm1997.mgfisiobook.viewmodels.treatments.CreateTreatmentState
 import es.jgm1997.mgfisiobook.viewmodels.treatments.CreateTreatmentViewModel
 
@@ -86,21 +87,13 @@ class CreateTreatmentScreen : Screen {
             }
 
             when (state) {
-                is CreateTreatmentState.Loading -> {
-                    Spacer(Modifier.height(16.dp))
-                    CircularProgressIndicator()
-                }
+                is CreateTreatmentState.Loading -> LoadingComponent()
 
-                is CreateTreatmentState.Success -> {
-                    navigator?.replace(TreatmentsScreen())
-                }
+                is CreateTreatmentState.Success -> navigator?.replace(TreatmentsScreen())
 
                 is CreateTreatmentState.Error -> {
                     Spacer(Modifier.height(16.dp))
-                    Text(
-                        text = (state as CreateTreatmentState.Error).message,
-                        color = MaterialTheme.colors.error
-                    )
+                    ErrorComponent((state as CreateTreatmentState.Error).message)
                 }
 
                 else -> Unit

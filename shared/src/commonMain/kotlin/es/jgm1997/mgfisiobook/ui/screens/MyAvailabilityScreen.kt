@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityState
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityViewModel
 
@@ -39,12 +38,10 @@ class MyAvailabilityScreen() : Screen {
 
                 // TODO: Mostrar la lista de items
             }
-            is MyAvailabilityState.Error -> {
-                Text(
-                    text = (state as MyAvailabilityState.Error).message,
-                    color = MaterialTheme.colors.error
-                )
-            }
+
+            is MyAvailabilityState.Error ->
+                ErrorComponent((state as MyAvailabilityState.Error).message)
+
 
             else -> Unit
         }

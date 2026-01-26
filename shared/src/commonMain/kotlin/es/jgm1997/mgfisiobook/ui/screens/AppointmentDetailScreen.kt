@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import es.jgm1997.mgfisiobook.ui.components.appointments.AppointmentDetailContent
+import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.viewmodels.appointments.AppointmentDetailState
 import es.jgm1997.mgfisiobook.viewmodels.appointments.AppointmentDetailViewModel
 import kotlin.uuid.ExperimentalUuidApi
@@ -36,13 +36,14 @@ class AppointmentDetailScreen(val appointmentId: Uuid) : Screen {
                     CircularProgressIndicator(Modifier.padding(32.dp))
                 }
             }
-            is AppointmentDetailState.Success -> {}
-            is AppointmentDetailState.Error -> {
-                Text(
-                    text = (state as AppointmentDetailState.Error).message,
-                    color = MaterialTheme.colors.error
-                )
-            }
+
+            is AppointmentDetailState.Success ->
+                AppointmentDetailContent((state as AppointmentDetailState.Success).appointment)
+
+
+            is AppointmentDetailState.Error ->
+                ErrorComponent((state as AppointmentDetailState.Error).message)
+
             else -> Unit
         }
     }
