@@ -1,4 +1,4 @@
-package es.jgm1997.shared.usecase
+package es.jgm1997.mgfisiobook.shared.usecase
 
 import es.jgm1997.mgfisiobook.core.repositories.DeviceRepository
 

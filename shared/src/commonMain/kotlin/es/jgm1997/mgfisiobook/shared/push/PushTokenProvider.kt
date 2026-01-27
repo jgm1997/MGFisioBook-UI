@@ -1,4 +1,4 @@
-package es.jgm1997.shared.push
+package es.jgm1997.mgfisiobook.shared.push
 
 interface PushTokenProvider {
     suspend fun getPushToken(): String?

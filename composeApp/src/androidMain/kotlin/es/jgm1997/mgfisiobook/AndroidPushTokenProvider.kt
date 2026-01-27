@@ -2,7 +2,7 @@ package es.jgm1997.mgfisiobook
 
 import android.content.Context
 import com.google.firebase.messaging.FirebaseMessaging
-import es.jgm1997.shared.push.PushTokenProvider
+import es.jgm1997.mgfisiobook.shared.push.PushTokenProvider
 import kotlinx.coroutines.tasks.await
 
 class AndroidPushTokenProvider(private val context: Context) : PushTokenProvider {

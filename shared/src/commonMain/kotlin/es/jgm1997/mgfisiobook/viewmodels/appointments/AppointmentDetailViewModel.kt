@@ -27,6 +27,22 @@ class AppointmentDetailViewModel(private val repository: AppointmentsRepository)
             }
         }
     }
+
+    fun delete(onSuccess: () -> Unit) {
+        val current = _state.value
+        if (current !is AppointmentDetailState.Success) return
+
+        screenModelScope.launch {
+            _state.value = AppointmentDetailState.Loading
+
+            try {
+                repository.deleteAppointment(current.appointment.id)
+                onSuccess()
+            } catch (e: Exception) {
+                _state.value = AppointmentDetailState.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
 }
 
 sealed class AppointmentDetailState {

@@ -8,6 +8,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -61,6 +62,24 @@ class AppointmentsRepository(private val client: HttpClient) {
                 header("Authorization", "Bearer ${AuthStorage.loadToken()}")
                 setBody(data)
             }.body()
+        } catch (e: ClientRequestException) {
+            println("Credenciales incorrectas: ${e.response.status.description}")
+            throw Exception("Credenciales incorrectas: ${e.response.status.description}")
+        } catch (e: ServerResponseException) {
+            println("Error del servidor: ${e.response.status.description}")
+            throw Exception("Error del servidor: ${e.response.status.description}")
+        } catch (e: Exception) {
+            println("Error de conexión: ${e.message}")
+            throw Exception("Error de conexión: ${e.message}")
+        }
+    }
+
+    suspend fun deleteAppointment(id: Uuid) {
+        try {
+            client.delete("$baseUrl/$id") {
+                contentType(ContentType.Application.Json)
+                header("Authorization", "Bearer ${AuthStorage.loadToken()}")
+            }
         } catch (e: ClientRequestException) {
             println("Credenciales incorrectas: ${e.response.status.description}")
             throw Exception("Credenciales incorrectas: ${e.response.status.description}")

@@ -3,6 +3,7 @@ package es.jgm1997.mgfisiobook.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import es.jgm1997.mgfisiobook.core.auth.AuthState
 import es.jgm1997.mgfisiobook.ui.screens.HomeScreen
@@ -15,6 +16,10 @@ fun AppNavigator() {
     if (token == null) {
         Navigator(LoginScreen())
     } else {
-        Navigator(HomeScreen())
+        Navigator(HomeScreen()) {navigator ->
+            AppNavigator.navigator = navigator
+            CurrentScreen()
+        }
     }
 }
+

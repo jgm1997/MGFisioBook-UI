@@ -5,6 +5,7 @@ import es.jgm1997.mgfisiobook.core.repositories.AuthRepository
 import es.jgm1997.mgfisiobook.core.auth.AuthViewModel
 import es.jgm1997.mgfisiobook.core.repositories.DeviceRepository
 import es.jgm1997.mgfisiobook.core.network.HttpClientFactory
+import es.jgm1997.mgfisiobook.core.repositories.AppStartRepository
 import es.jgm1997.mgfisiobook.core.repositories.AvailabilityRepository
 import es.jgm1997.mgfisiobook.core.repositories.PatientRepository
 import es.jgm1997.mgfisiobook.core.repositories.TreatmentRepository
@@ -19,8 +20,9 @@ import es.jgm1997.mgfisiobook.viewmodels.treatments.CreateTreatmentViewModel
 import es.jgm1997.mgfisiobook.viewmodels.availability.MyAvailabilityViewModel
 import es.jgm1997.mgfisiobook.viewmodels.patients.PatientsViewModel
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
-import es.jgm1997.shared.AuthController
-import es.jgm1997.shared.usecase.RegisterDeviceUseCase
+import es.jgm1997.mgfisiobook.shared.AuthController
+import es.jgm1997.mgfisiobook.shared.usecase.RegisterDeviceUseCase
+import es.jgm1997.mgfisiobook.viewmodels.notifications.AppStartViewModel
 import org.koin.dsl.module
 
 val appModule = module {
@@ -31,6 +33,7 @@ val appModule = module {
     single { AppointmentsRepository(get()) }
     single { AvailabilityRepository(get()) }
     single { PatientRepository(get()) }
+    single { AppStartRepository(get()) }
 
     single { RegisterDeviceUseCase(get()) }
 
@@ -48,4 +51,5 @@ val appModule = module {
     factory { MyAvailabilityViewModel(get()) }
     factory { AvailabilityEditorViewModel(get()) }
     factory { DailyAvailabilityViewModel(get()) }
+    factory { AppStartViewModel(get()) }
 }

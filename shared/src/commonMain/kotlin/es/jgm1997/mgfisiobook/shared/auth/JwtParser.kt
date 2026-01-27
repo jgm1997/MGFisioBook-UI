@@ -1,4 +1,4 @@
-package es.jgm1997.shared.auth
+package es.jgm1997.mgfisiobook.shared.auth
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
