@@ -1,9 +1,13 @@
 package es.jgm1997.mgfisiobook.ui.screens
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.ui.components.appointments.AppointmentDetailContent
 import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.viewmodels.appointments.AppointmentDetailState
@@ -23,6 +28,7 @@ import kotlin.uuid.Uuid
 class AppointmentDetailScreen(val appointmentId: Uuid) : Screen {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         val viewModel = getScreenModel<AppointmentDetailViewModel>()
         val state by viewModel.state.collectAsState()
 
@@ -37,8 +43,13 @@ class AppointmentDetailScreen(val appointmentId: Uuid) : Screen {
                 }
             }
 
-            is AppointmentDetailState.Success ->
+            is AppointmentDetailState.Success -> {
                 AppointmentDetailContent((state as AppointmentDetailState.Success).appointment)
+                Spacer(Modifier.height(16.dp))
+                Button(onClick = {navigator?.replace(HomeScreen())}) {
+                    Text("Ir a Inicio")
+                }
+            }
 
 
             is AppointmentDetailState.Error ->

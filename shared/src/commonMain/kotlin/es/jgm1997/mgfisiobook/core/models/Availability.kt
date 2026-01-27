@@ -22,3 +22,10 @@ data class AvailabilityCreate(
     @SerialName("start_time") val startTime: LocalDateTime,
     @SerialName("end_time") val endTime: LocalDateTime
 )
+
+@Serializable
+data class AvailabilitySlot(
+    val start: LocalDateTime,
+    val end: LocalDateTime,
+    val available: Boolean
+)

@@ -18,3 +18,13 @@ data class Appointment(
     val status: String,
     val notes: String? = null
 )
+
+@OptIn(ExperimentalUuidApi::class)
+@Serializable
+data class AppointmentCreate(
+    @SerialName("therapist_id") val therapistId: Uuid,
+    @SerialName("patient_id") val patientID: Uuid,
+    @SerialName("treatment_id") val treatmentId: Uuid,
+    @SerialName("start_time") val startTime: LocalDateTime,
+    @SerialName("end_time") val endTime: LocalDateTime,
+)
