@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import es.jgm1997.mgfisiobook.core.auth.AuthViewModel
 import es.jgm1997.mgfisiobook.core.auth.hasRole
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
 import kotlin.uuid.ExperimentalUuidApi
@@ -25,7 +24,6 @@ class HomeScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val authViewModel = getScreenModel<AuthViewModel>()
 
         if (!isAuthenticated()) {
             navigator?.replace(LoginScreen())
@@ -62,11 +60,8 @@ class HomeScreen : Screen {
                 }
             }
             Spacer(Modifier.height(16.dp))
-            Button(onClick = {
-                authViewModel.logout()
-                navigator?.replace(LoginScreen())
-            }) {
-                Text("Cerrar sesión")
+            Button(onClick = { navigator?.push(ProfileScreen()) }) {
+                Text("Mi perfil")
             }
         }
     }

@@ -2,7 +2,6 @@ package es.jgm1997.mgfisiobook.core.di
 
 import es.jgm1997.mgfisiobook.core.repositories.AppointmentsRepository
 import es.jgm1997.mgfisiobook.core.repositories.AuthRepository
-import es.jgm1997.mgfisiobook.core.auth.AuthViewModel
 import es.jgm1997.mgfisiobook.core.repositories.DeviceRepository
 import es.jgm1997.mgfisiobook.core.network.HttpClientFactory
 import es.jgm1997.mgfisiobook.core.repositories.AppStartRepository
@@ -22,6 +21,7 @@ import es.jgm1997.mgfisiobook.viewmodels.patients.PatientsViewModel
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
 import es.jgm1997.mgfisiobook.shared.AuthController
 import es.jgm1997.mgfisiobook.shared.usecase.RegisterDeviceUseCase
+import es.jgm1997.mgfisiobook.viewmodels.auth.UserProfileViewModel
 import es.jgm1997.mgfisiobook.viewmodels.notifications.AppStartViewModel
 import org.koin.dsl.module
 
@@ -39,7 +39,7 @@ val appModule = module {
 
     single { AuthController(get(), get(), get()) }
 
-    factory { AuthViewModel() }
+    factory { UserProfileViewModel(get()) }
     factory { LoginViewModel(get()) }
     factory { RegisterViewModel(get()) }
     factory { PatientsViewModel(get()) }
