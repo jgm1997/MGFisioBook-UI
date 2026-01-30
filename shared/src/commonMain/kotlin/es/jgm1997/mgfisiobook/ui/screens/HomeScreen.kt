@@ -7,14 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Calendar
+import compose.icons.feathericons.Clock
 import es.jgm1997.mgfisiobook.core.auth.hasRole
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
 import kotlin.uuid.ExperimentalUuidApi
@@ -41,10 +44,12 @@ class HomeScreen : Screen {
 
             if (hasRole("patient")) {
                 Button(onClick = { navigator?.push(AppointmentsListScreen()) }) {
+                    Icon(FeatherIcons.Clock, contentDescription = null)
                     Text("Mis citas")
                 }
             } else {
                 Button(onClick = { navigator?.push(MyAvailabilityScreen()) }) {
+                    Icon(FeatherIcons.Calendar, contentDescription = null)
                     Text("Mi disponibilidad")
                 }
             }

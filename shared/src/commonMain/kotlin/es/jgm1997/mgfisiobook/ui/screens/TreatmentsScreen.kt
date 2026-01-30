@@ -63,7 +63,7 @@ class TreatmentsScreen : Screen {
                             Column(Modifier.padding(16.dp)) {
                                 Text(treatment.name, style = MaterialTheme.typography.h6)
                                 Spacer(Modifier.height(4.dp))
-                                Text(treatment.description)
+                                treatment.description?.let { Text(it) }
                                 Spacer(Modifier.height(8.dp))
                                 Text("Duración: ${treatment.durationMinutes} minutos")
                                 Text("Precio: ${treatment.price}€")

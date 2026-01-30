@@ -3,6 +3,7 @@
 package es.jgm1997.mgfisiobook.ui.components.appointments
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,10 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,12 +32,19 @@ fun AppointmentsList(items: List<Appointment>, onSelect: (Appointment) -> Unit) 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Mis citas", style = MaterialTheme.typography.h5)
-        Spacer((Modifier.height(16.dp)))
+
+        Spacer(Modifier.height(6.dp))
+        Divider(Modifier.height(4.dp))
+        Spacer(Modifier.height(6.dp))
 
         items.forEach { appointment ->
             Card(
+                elevation = 4.dp, shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-                    .clickable { onSelect(appointment) }) {
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) { onSelect(appointment) }) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Paciente: ${appointment.patientID}")
                     Text("Tratamiento: ${appointment.treatmentId}")

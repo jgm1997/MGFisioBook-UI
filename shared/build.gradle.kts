@@ -65,6 +65,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
 
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
@@ -85,6 +86,8 @@ kotlin {
 
                 implementation(libs.jwt)
                 implementation(libs.kmp.settings)
+
+                implementation(libs.composeIcons.feather)
             }
         }
 
@@ -100,6 +103,11 @@ kotlin {
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.koin.android)
                 implementation(libs.koin.compose)
+                implementation(libs.compose.material)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.foundation)
+                implementation(libs.androidx.material3)
+                implementation(libs.accompanist.swipeRefresh)
             }
         }
 

@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlin.time.Instant
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -19,8 +22,8 @@ class CreateAppointmentViewModel(private val repository: AppointmentsRepository)
     fun setSlot(startTime: LocalDateTime, endTime: LocalDateTime, therapistId: Uuid) {
         _state.value = CreateAppointmentState.Form(
             therapistId = therapistId,
-            startTime = startTime,
-            endTime = endTime
+            startTime = startTime.toInstant(TimeZone.UTC),
+            endTime = endTime.toInstant(TimeZone.UTC)
         )
     }
 
@@ -81,8 +84,8 @@ sealed class CreateAppointmentState {
     @OptIn(ExperimentalUuidApi::class)
     data class Form(
         val therapistId: Uuid,
-        val startTime: LocalDateTime,
-        val endTime: LocalDateTime,
+        val startTime: Instant,
+        val endTime: Instant,
         val treatmentId: Uuid? = null,
         val patientId: Uuid? = null
     ) : CreateAppointmentState()

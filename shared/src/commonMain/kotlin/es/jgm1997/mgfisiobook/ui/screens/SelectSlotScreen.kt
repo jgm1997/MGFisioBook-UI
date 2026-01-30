@@ -13,6 +13,8 @@ import es.jgm1997.mgfisiobook.ui.components.common.LoadingComponent
 import es.jgm1997.mgfisiobook.viewmodels.availability.DailyAvailabilityState
 import es.jgm1997.mgfisiobook.viewmodels.availability.DailyAvailabilityViewModel
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -39,11 +41,15 @@ class SelectSlotScreen(private val date: LocalDate, private val therapistId: Uui
                 DailyAvailabilityList(
                     slots = slots,
                     onSelect = { slot ->
+                        val tz = TimeZone.currentSystemDefault()
+                        val startLocal = slot.start.toLocalDateTime(tz)
+                        val endLocal = slot.end.toLocalDateTime(tz)
+
                         navigator?.push(
                             SelectTreatmentScreen(
                                 therapistId,
-                                slot.start,
-                                slot.end
+                                startLocal,
+                                endLocal
                             )
                         )
                     })

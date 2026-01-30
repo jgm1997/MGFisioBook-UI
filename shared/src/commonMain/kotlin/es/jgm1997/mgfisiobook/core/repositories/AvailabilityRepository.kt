@@ -46,7 +46,7 @@ class AvailabilityRepository(private val client: HttpClient) {
     suspend fun getDailyAvailability(date: LocalDate, therapistId: Uuid): List<AvailabilitySlot> {
         try {
             return client.get(baseUrl) {
-                parameter("date", date)
+                parameter("date", date.toString())
                 parameter("therapist_id", therapistId)
                 contentType(ContentType.Application.Json)
                 header("Authorization", "Bearer ${AuthStorage.loadToken()}")

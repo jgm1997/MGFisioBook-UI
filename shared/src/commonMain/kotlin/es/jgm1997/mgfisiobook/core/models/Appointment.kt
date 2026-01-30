@@ -1,8 +1,8 @@
 package es.jgm1997.mgfisiobook.core.models
 
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -13,8 +13,8 @@ data class Appointment(
     @SerialName("patient_id") val patientID: Uuid,
     @SerialName("therapist_id") val therapistId: Uuid,
     @SerialName("treatment_id") val treatmentId: Uuid,
-    @SerialName("start_time") val startTime: LocalDateTime,
-    @SerialName("end_time") val endTime: LocalDateTime,
+    @SerialName("start_time") val startTime: Instant,
+    @SerialName("end_time") val endTime: Instant,
     val status: String,
     val notes: String? = null
 )
@@ -25,6 +25,6 @@ data class AppointmentCreate(
     @SerialName("therapist_id") val therapistId: Uuid,
     @SerialName("patient_id") val patientID: Uuid,
     @SerialName("treatment_id") val treatmentId: Uuid,
-    @SerialName("start_time") val startTime: LocalDateTime,
-    @SerialName("end_time") val endTime: LocalDateTime,
+    @SerialName("start_time") val startTime: Instant,
+    @SerialName("end_time") val endTime: Instant,
 )

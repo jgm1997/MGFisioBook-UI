@@ -8,14 +8,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlin.time.Instant
 
 sealed class AvailabilityEditorState {
     object Idle : AvailabilityEditorState()
     object Loading : AvailabilityEditorState()
     data class Form(
         val weekday: Int = 1,
-        val startTime: LocalDateTime? = null,
-        val endTime: LocalDateTime? = null
+        val startTime: Instant? = null,
+        val endTime: Instant? = null
     ) : AvailabilityEditorState()
 
     data class Error(val message: String) : AvailabilityEditorState()
@@ -37,14 +40,14 @@ class AvailabilityEditorViewModel(
     fun updateStartTime(value: LocalDateTime) {
         val current = _state.value
         if (current is AvailabilityEditorState.Form) {
-            _state.value = current.copy(startTime = value)
+            _state.value = current.copy(startTime = value.toInstant(TimeZone.UTC))
         }
     }
 
     fun updateEndTime(value: LocalDateTime) {
         val current = _state.value
         if (current is AvailabilityEditorState.Form) {
-            _state.value = current.copy(endTime = value)
+            _state.value = current.copy(endTime = value.toInstant(TimeZone.UTC))
         }
     }
 

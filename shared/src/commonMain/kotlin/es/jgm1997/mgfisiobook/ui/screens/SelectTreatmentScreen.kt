@@ -12,6 +12,7 @@ import es.jgm1997.mgfisiobook.viewmodels.appointments.CreateAppointmentViewModel
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsState
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
 import kotlinx.datetime.LocalDateTime
+import kotlin.time.Instant
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
