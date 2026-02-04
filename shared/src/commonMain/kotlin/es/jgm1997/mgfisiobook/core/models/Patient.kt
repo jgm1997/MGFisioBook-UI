@@ -1,10 +1,12 @@
 package es.jgm1997.mgfisiobook.core.models
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
+@Serializable
 data class Patient(
     val id: Uuid,
     val email: String,

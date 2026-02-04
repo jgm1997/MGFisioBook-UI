@@ -45,8 +45,8 @@ val appModule = module {
     factory { PatientsViewModel(get()) }
     factory { TreatmentsViewModel(get()) }
     factory { CreateTreatmentViewModel(get()) }
-    factory { AppointmentDetailViewModel(get()) }
-    factory { AppointmentsListViewModel(get()) }
+    factory { AppointmentDetailViewModel(get(), get(), get(), get()) }
+    factory { AppointmentsListViewModel(get(), get(), get(), get()) }
     factory { CreateAppointmentViewModel(get()) }
     factory { MyAvailabilityViewModel(get()) }
     factory { AvailabilityEditorViewModel(get()) }

@@ -7,9 +7,6 @@ import es.jgm1997.mgfisiobook.core.repositories.AvailabilityRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
 import kotlin.time.Instant
 
 sealed class AvailabilityEditorState {
@@ -37,17 +34,17 @@ class AvailabilityEditorViewModel(
         }
     }
 
-    fun updateStartTime(value: LocalDateTime) {
+    fun updateStartTime(value: Instant) {
         val current = _state.value
         if (current is AvailabilityEditorState.Form) {
-            _state.value = current.copy(startTime = value.toInstant(TimeZone.UTC))
+            _state.value = current.copy(startTime = value)
         }
     }
 
-    fun updateEndTime(value: LocalDateTime) {
+    fun updateEndTime(value: Instant) {
         val current = _state.value
         if (current is AvailabilityEditorState.Form) {
-            _state.value = current.copy(endTime = value.toInstant(TimeZone.UTC))
+            _state.value = current.copy(endTime = value)
         }
     }
 

@@ -12,11 +12,7 @@ class TreatmentsViewModel(private val repository: TreatmentRepository) : ScreenM
     private val _state = MutableStateFlow<TreatmentsState>(TreatmentsState.Loading)
     val state: StateFlow<TreatmentsState> = _state
 
-    init {
-        loadTreatments()
-    }
-
-    private fun loadTreatments() {
+    fun loadTreatments() {
         screenModelScope.launch {
             try {
                 val treatments = repository.getTreatments()

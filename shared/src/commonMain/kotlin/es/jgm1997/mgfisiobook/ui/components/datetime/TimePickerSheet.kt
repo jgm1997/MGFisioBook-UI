@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -26,19 +27,48 @@ fun TimePickerSheet(
         Text("Seleccionar hora", style = MaterialTheme.typography.h6)
         Spacer(Modifier.height(16.dp))
 
+        Text("Horas", style = MaterialTheme.typography.subtitle1)
+        Spacer(Modifier.height(8.dp))
+
         LazyRow {
-            items(hours.size) { index ->
-                Text(
-                    hours[index],
-                    modifier = Modifier.padding(horizontal = 8.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) {
-                            onSelect(
-                                hours[index],
-                                "00"
-                            )
-                        })
+            items(hours) { hour ->
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colors.surface,
+                    modifier = Modifier.padding(8.dp).clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { onSelect(hour, "00") }
+                ) {
+                    Text(
+                        hour,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            }
+        }
+        Spacer(Modifier.height(24.dp))
+
+        Text("Minutos", style = MaterialTheme.typography.subtitle1)
+        Spacer(Modifier.height(8.dp))
+
+        LazyRow {
+            items(minutes) { minute ->
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colors.surface,
+                    modifier = Modifier.padding(8.dp).clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { onSelect("00", minute) }
+                ) {
+                    Text(
+                        minute,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        style = MaterialTheme.typography.body1
+                    )
+                }
             }
         }
     }

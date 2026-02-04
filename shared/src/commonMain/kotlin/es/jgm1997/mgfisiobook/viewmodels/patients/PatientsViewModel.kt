@@ -7,7 +7,9 @@ import es.jgm1997.mgfisiobook.core.repositories.PatientRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
 
+@OptIn(ExperimentalUuidApi::class)
 class PatientsViewModel(private val repository: PatientRepository) : ScreenModel {
     private val _state = MutableStateFlow<PatientsState>(PatientsState.Loading)
     val state: StateFlow<PatientsState> = _state

@@ -1,14 +1,16 @@
 package es.jgm1997.mgfisiobook.ui.components.common
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 
 @Composable
-fun LoadingComponent() {
-    Spacer(Modifier.height(16.dp))
-    CircularProgressIndicator()
+fun LoadingComponent(padding: Dp) {
+    Box(Modifier.fillMaxSize()) {
+        CircularProgressIndicator(Modifier.padding(padding))
+    }
 }

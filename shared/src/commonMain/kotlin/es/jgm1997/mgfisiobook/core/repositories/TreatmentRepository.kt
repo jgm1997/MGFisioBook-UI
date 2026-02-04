@@ -35,7 +35,7 @@ class TreatmentRepository(private val client: HttpClient) {
     }
 
     @OptIn(ExperimentalUuidApi::class)
-    suspend fun getTreatment(id: String): Treatment {
+    suspend fun getTreatment(id: Uuid): Treatment {
         try {
             return client.get("${ApiConfig.baseUrl}/treatments/$id").body()
         } catch (e: ClientRequestException) {
