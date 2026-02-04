@@ -3,6 +3,7 @@ package es.jgm1997.mgfisiobook.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -51,7 +52,7 @@ class CreateTreatmentScreen : Screen {
         }
 
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -87,7 +88,7 @@ class CreateTreatmentScreen : Screen {
             }
 
             when (state) {
-                is CreateTreatmentState.Loading -> LoadingComponent()
+                is CreateTreatmentState.Loading -> LoadingComponent(32.dp)
 
                 is CreateTreatmentState.Success -> navigator?.replace(TreatmentsScreen())
 

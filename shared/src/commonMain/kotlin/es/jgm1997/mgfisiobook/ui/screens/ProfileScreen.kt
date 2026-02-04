@@ -1,5 +1,6 @@
 package es.jgm1997.mgfisiobook.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,7 +47,11 @@ class ProfileScreen : Screen {
             viewModel.load()
         }
 
-        Column(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.fillMaxSize().padding(vertical = 48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             AppTopBar("Mi perfil")
 
 

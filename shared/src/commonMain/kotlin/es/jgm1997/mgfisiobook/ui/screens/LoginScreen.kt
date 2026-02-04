@@ -78,7 +78,7 @@ class LoginScreen : Screen {
             }
 
             when (state) {
-                is LoginState.Loading -> LoadingComponent()
+                is LoginState.Loading -> LoadingComponent(32.dp)
 
                 is LoginState.Error -> {
                     Spacer(Modifier.height(16.dp))

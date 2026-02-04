@@ -74,6 +74,7 @@ class HomeScreen : Screen {
                 FeatherIcons.Activity
             ) { navigator?.push(TreatmentsScreen()) }
             if (hasRole("admin", "therapist")) {
+                Spacer(Modifier.height(8.dp))
                 HomeCard("Crear tratamiento", FeatherIcons.Plus) {
                     navigator?.push(
                         CreateTreatmentScreen()

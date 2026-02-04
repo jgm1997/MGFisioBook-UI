@@ -89,7 +89,7 @@ class RegisterScreen : Screen {
             }
 
             when (state) {
-                is RegisterState.Loading -> LoadingComponent()
+                is RegisterState.Loading -> LoadingComponent(32.dp)
 
                 is RegisterState.Error -> {
                     Spacer(Modifier.height(16.dp))

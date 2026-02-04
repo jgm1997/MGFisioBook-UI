@@ -25,6 +25,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import es.jgm1997.mgfisiobook.core.auth.isAuthenticated
 import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
+import es.jgm1997.mgfisiobook.ui.components.common.LoadingComponent
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsState
 import es.jgm1997.mgfisiobook.viewmodels.treatments.TreatmentsViewModel
 
@@ -41,17 +42,13 @@ class TreatmentsScreen : Screen {
         }
 
         when (state) {
-            is TreatmentsState.Loading -> {
-                Box(Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(Modifier.padding(32.dp))
-                }
-            }
+            is TreatmentsState.Loading -> LoadingComponent(32.dp)
 
             is TreatmentsState.Success -> {
                 val treatments = (state as TreatmentsState.Success).treatments
 
                 LazyColumn(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.fillMaxSize().padding(16.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
