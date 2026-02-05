@@ -16,7 +16,8 @@ object AuthStorage {
 
     fun loadToken(): AuthToken? {
         val json = settings.getStringOrNull(KEY_TOKEN) ?: return null
-        return Json.decodeFromString(json)
+        val token = Json.decodeFromString<AuthToken?>(json)
+        return token
     }
 
     fun clear() {

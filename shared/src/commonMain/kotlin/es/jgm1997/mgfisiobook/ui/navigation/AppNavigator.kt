@@ -6,10 +6,15 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 object AppNavigator {
-    var navigator: Navigator? = null
+    // No almacenar una referencia separada; usar la referencia administrada por AppNavigatorRef
 
     @OptIn(ExperimentalUuidApi::class)
     fun navigateToAppointmentDetail(appointmentId: Uuid) {
-        navigator?.push(AppointmentDetailScreen(appointmentId))
+        try {
+            AppNavigatorRef.navigator?.push(AppointmentDetailScreen(appointmentId))
+        } catch (e: Exception) {
+            // Loguear y ignorar si el navigator está en un estado inválido
+            println("Navigation failed: ${e.message}")
+        }
     }
 }

@@ -15,13 +15,13 @@ actual class HttpClientFactory {
     actual fun create(): HttpClient = HttpClient(Darwin) {
         install(Logging)
         install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true })
+            json(Json { ignoreUnknownKeys = true; coerceInputValues = true; isLenient = true })
         }
         install(Auth) {
             bearer {
                 loadTokens {
                     AuthState.token.value?.let {
-                        BearerTokens(it.accessToken, "")
+                        BearerTokens(it.accessToken ?: "", "")
                     }
                 }
             }
