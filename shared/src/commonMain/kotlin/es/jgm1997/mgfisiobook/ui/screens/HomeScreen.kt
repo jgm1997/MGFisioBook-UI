@@ -22,9 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.ui.ExitAppOnBack
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Activity
 import compose.icons.feathericons.Calendar
@@ -41,9 +43,13 @@ class HomeScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.current
 
+        // Interceptar botón/gesto Back y terminar la Activity (Android solo)
+        ExitAppOnBack()
+
         if (!isAuthenticated()) {
             LaunchedEffect(Unit) {
-                navigator?.replaceAll(LoginScreen())
+                navigator?.popAll()
+                navigator?.push(LoginScreen())
             }
             return
         }
@@ -53,7 +59,11 @@ class HomeScreen : Screen {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Bienvenido a MGFisioBook")
+            Text(
+                "Bienvenido a MGFisioBook",
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold
+            )
 
             Spacer(Modifier.height(16.dp))
 

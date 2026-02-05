@@ -41,7 +41,7 @@ class CreateAppointmentViewModel(private val repository: AppointmentsRepository)
         }
     }
 
-    fun create(onSuccess: (Uuid) -> Unit) {
+    fun create() {
         val current = _state.value
         if (current !is CreateAppointmentState.Form) return
 
@@ -68,7 +68,7 @@ class CreateAppointmentViewModel(private val repository: AppointmentsRepository)
                         endTime = current.endTime
                     )
                 )
-                onSuccess(result.id)
+                _state.value = CreateAppointmentState.Success(result.id)
             } catch (e: Exception) {
                 _state.value = CreateAppointmentState.Error(e.message ?: "Error desconocido")
             }
@@ -80,6 +80,9 @@ sealed class CreateAppointmentState {
     object Idle : CreateAppointmentState()
     object Loading : CreateAppointmentState()
     data class Error(val message: String) : CreateAppointmentState()
+
+    @OptIn(ExperimentalUuidApi::class)
+    data class Success(val appointmentId: Uuid) : CreateAppointmentState()
 
     @OptIn(ExperimentalUuidApi::class)
     data class Form(

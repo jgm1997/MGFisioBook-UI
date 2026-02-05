@@ -14,6 +14,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Activity
 import compose.icons.feathericons.Calendar
@@ -43,13 +45,27 @@ import kotlin.uuid.ExperimentalUuidApi
 class ConfirmAppointmentScreen : Screen {
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.current
+        val navigator = LocalNavigator.currentOrThrow
         val appointmentViewModel = getScreenModel<CreateAppointmentViewModel>()
         val patientsViewModel = getScreenModel<PatientsViewModel>()
         val treatmentsViewModel = getScreenModel<TreatmentsViewModel>()
         val appointmentState by appointmentViewModel.state.collectAsState()
         val patientsState by patientsViewModel.state.collectAsState()
         val treatmentsState by treatmentsViewModel.state.collectAsState()
+
+        // Manejar navegación cuando la cita se crea exitosamente
+        // Evitamos el crash del lifecycle navegando solo cuando el estado cambia
+        LaunchedEffect(appointmentState) {
+            if (appointmentState is CreateAppointmentState.Success) {
+                navigator.popAll()
+                navigator.push(AppointmentsListScreen())
+            }
+        }
+
+        // No mostrar nada si ya navegamos
+        if (appointmentState is CreateAppointmentState.Success) {
+            return
+        }
 
         Column(Modifier.fillMaxSize()) {
             AppTopBar("Confirmar cita")
@@ -106,9 +122,7 @@ class ConfirmAppointmentScreen : Screen {
 
                         Button(
                             onClick = {
-                                appointmentViewModel.create {
-                                    navigator?.replaceAll(AppointmentsListScreen())
-                                }
+                                appointmentViewModel.create()
                             },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Mail
 import compose.icons.feathericons.Shield
@@ -39,12 +40,26 @@ import es.jgm1997.mgfisiobook.viewmodels.auth.UserProfileViewModel
 class ProfileScreen : Screen {
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.current
+        val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<UserProfileViewModel>()
         val state by viewModel.state.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.load()
+        }
+
+        // Manejar navegación cuando el usuario cierra sesión
+        // Evitamos el crash del lifecycle navegando solo cuando el estado cambia
+        LaunchedEffect(state) {
+            if (state is UserProfileState.LoggedOut) {
+                navigator.popAll()
+                navigator.push(LoginScreen())
+            }
+        }
+
+        // No mostrar nada si ya navegamos
+        if (state is UserProfileState.LoggedOut) {
+            return
         }
 
         Column(
@@ -114,7 +129,7 @@ class ProfileScreen : Screen {
                     }
                     Spacer(Modifier.height(32.dp))
                     Button(
-                        onClick = { viewModel.logout { navigator?.replaceAll(LoginScreen()) } },
+                        onClick = { viewModel.logout() },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = MaterialTheme.colors.error

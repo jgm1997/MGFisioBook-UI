@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import es.jgm1997.mgfisiobook.ui.ExitAppOnBack
 import es.jgm1997.mgfisiobook.ui.components.common.ErrorComponent
 import es.jgm1997.mgfisiobook.ui.components.common.LoadingComponent
 import es.jgm1997.mgfisiobook.viewmodels.auth.LoginState
@@ -39,6 +40,9 @@ class LoginScreen : Screen {
         val navigator = LocalNavigator.current
         val viewModel = getScreenModel<LoginViewModel>()
         val state by viewModel.state.collectAsState()
+
+        // Interceptar el botón/gesto Back y terminar la Activity (Android solo)
+        ExitAppOnBack()
 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 sealed class UserProfileState {
     object Idle : UserProfileState()
     object Loading : UserProfileState()
+    object LoggedOut : UserProfileState()
     data class Success(val profile: UserInfo) : UserProfileState()
     data class Error(val message: String) : UserProfileState()
 }
@@ -32,13 +33,13 @@ class UserProfileViewModel(private val repository: AuthRepository) : ScreenModel
         }
     }
 
-    fun logout(onSuccess: () -> Unit) {
+    fun logout() {
         screenModelScope.launch {
             try {
                 repository.logout()
             } catch (_: Exception) {
             }
-            onSuccess()
+            _state.value = UserProfileState.LoggedOut
         }
     }
 }

@@ -108,6 +108,7 @@ kotlin {
                 implementation(libs.compose.ui)
                 implementation(libs.compose.foundation)
                 implementation(libs.androidx.material3)
+                implementation(libs.androidx.activity.compose) // Needed for BackHandler (androidx.activity:activity-compose)
                 implementation(libs.accompanist.swipeRefresh)
             }
         }
