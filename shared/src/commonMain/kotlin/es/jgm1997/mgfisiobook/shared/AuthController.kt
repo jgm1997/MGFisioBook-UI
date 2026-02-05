@@ -17,13 +17,16 @@ class AuthController(
         return try {
             val token = authRepository.login(email, password)
             AuthStorage.saveToken(token)
-            val userId = JwtParser.extractUserId(token.accessToken)
+            val userId = JwtParser.extract(token.accessToken, "sub")
                 ?: return AuthResult.Error("No se pudo extraer el userId del JWT")
             val pushToken = pushTokenProvider.getPushToken()
             if (pushToken != null) registerDeviceUseCase(
-                pushToken, pushTokenProvider.platform(), pushTokenProvider.appVersion(), userId
+                pushToken,
+                pushTokenProvider.platform(),
+                pushTokenProvider.appVersion(),
+                userId.toString()
             )
-            AuthResult.Success(token, userId)
+            AuthResult.Success(token, userId.toString())
         } catch (e: Exception) {
             AuthResult.Error("Login failed", e)
         }

@@ -6,6 +6,8 @@ import es.jgm1997.mgfisiobook.core.repositories.AppStartRepository
 import es.jgm1997.mgfisiobook.shared.notifications.NotificationBridge
 import es.jgm1997.shared.platform
 import es.jgm1997.mgfisiobook.ui.navigation.AppNavigator
+import es.jgm1997.mgfisiobook.ui.navigation.NavigationEvent
+import es.jgm1997.mgfisiobook.ui.navigation.NavigationEventBus
 import kotlinx.coroutines.launch
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -34,6 +36,8 @@ class AppStartViewModel(private val repository: AppStartRepository) : ScreenMode
 
     private fun handleNotificationData(data: Map<String, String>) {
         val appointmentId = data["appointmentId"] ?: return
-        AppNavigator.navigateToAppointmentDetail(Uuid.parse(appointmentId))
+        screenModelScope.launch {
+            NavigationEventBus.send(NavigationEvent.ToAppointmentDetail(Uuid.parse(appointmentId)))
+        }
     }
 }

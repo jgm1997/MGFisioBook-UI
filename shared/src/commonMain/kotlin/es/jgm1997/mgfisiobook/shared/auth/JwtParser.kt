@@ -8,14 +8,14 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 @OptIn(ExperimentalEncodingApi::class)
 object JwtParser {
-    fun extractUserId(jwt: String): String? {
+    fun extract(jwt: String, field: String): String? {
         val parts = jwt.split(".")
         if (parts.size != 3) return null
 
         return try {
             val payload = Base64.decode(parts[1]).decodeToString()
             val json = Json.parseToJsonElement(payload).jsonObject
-            json["sub"]?.jsonPrimitive?.content
+            json[field]?.jsonPrimitive?.content
         } catch (_: Exception) {
             null
         }
